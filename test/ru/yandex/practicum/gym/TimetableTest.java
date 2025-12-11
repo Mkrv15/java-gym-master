@@ -26,7 +26,7 @@ public class TimetableTest {
 
         List<TrainingSession> tuesdaySessions =
                 timetable.getTrainingSessionsForDay(DayOfWeek.TUESDAY);
-        Assertions.assertEquals(new ArrayList<>(),tuesdaySessions);
+        Assertions.assertEquals(new ArrayList<>(), tuesdaySessions);
     }
 
     @Test
@@ -126,11 +126,11 @@ public class TimetableTest {
     void testEmptyTimetable() {
         Timetable timetable = new Timetable();
 
-        for (DayOfWeek day : DayOfWeek.values()) {
+        for(DayOfWeek day: DayOfWeek.values()){
             Assertions.assertNull(timetable.getTrainingSessionsForDay(day));
 
-            for (int i = 0; i < 23; i++) {
-                Assertions.assertEquals(new ArrayList<>(),timetable.getTrainingSessionsForDayAndTime(day, new TimeOfDay(i, 0)));
+            for(int i = 0; i < 23; i++){
+                Assertions.assertEquals(new ArrayList<>(), timetable.getTrainingSessionsForDayAndTime(day, new TimeOfDay(i, 0)));
             }
         }
     }
