@@ -28,7 +28,7 @@ public class Timetable {
             return new ArrayList<>();
         }
         ArrayList<TrainingSession> result = new ArrayList<>();
-        for(ArrayList<TrainingSession> trainingSessions: sessionsForDay.values()){
+        for (ArrayList<TrainingSession> trainingSessions : sessionsForDay.values()) {
             result.addAll(trainingSessions);
         }
         return result;
@@ -46,8 +46,8 @@ public class Timetable {
         HashMap<Coach, Integer> coachCounter = new HashMap<>();
 
         for (TreeMap<TimeOfDay, ArrayList<TrainingSession>> sessionForDay : timetable.values()) {
-            for(ArrayList<TrainingSession> sessionsAtTime: sessionForDay.values()){
-                for(TrainingSession trainingSession: sessionsAtTime){
+            for (ArrayList<TrainingSession> sessionsAtTime : sessionForDay.values()) {
+                for (TrainingSession trainingSession : sessionsAtTime) {
                     Coach coach = trainingSession.getCoach();
                     coachCounter.put(coach, coachCounter.getOrDefault(coach, 0) + 1);
                 }
@@ -55,7 +55,7 @@ public class Timetable {
         }
 
         List<CounterOfTrainings> countOfTrainings = new ArrayList<>();
-        for(Map.Entry<Coach, Integer> entry: coachCounter.entrySet()){
+        for (Map.Entry<Coach, Integer> entry : coachCounter.entrySet()) {
             countOfTrainings.add(new CounterOfTrainings(entry.getKey(), entry.getValue()));
         }
         countOfTrainings.sort((c1, c2) -> c2.getCount().compareTo(c1.getCount()));
