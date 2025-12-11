@@ -18,15 +18,15 @@ public class TimetableTest {
 
         timetable.addNewTrainingSession(singleTrainingSession);
 
-        TreeMap<TimeOfDay, ArrayList<TrainingSession>> mondaySessions =
+        List<TrainingSession> mondaySessions =
                 timetable.getTrainingSessionsForDay(DayOfWeek.MONDAY);
 
         Assertions.assertNotNull(mondaySessions);
         Assertions.assertEquals(1, mondaySessions.size());
 
-        TreeMap<TimeOfDay, ArrayList<TrainingSession>> tuesdaySessions =
+        List<TrainingSession> tuesdaySessions =
                 timetable.getTrainingSessionsForDay(DayOfWeek.TUESDAY);
-        Assertions.assertNull(tuesdaySessions);
+        Assertions.assertEquals(new ArrayList<>(),tuesdaySessions);
     }
 
     @Test
@@ -53,21 +53,25 @@ public class TimetableTest {
         timetable.addNewTrainingSession(thursdayChildTrainingSession);
         timetable.addNewTrainingSession(saturdayChildTrainingSession);
 
-        TreeMap<TimeOfDay, ArrayList<TrainingSession>> mondaySession =
+        List<TrainingSession> mondaySession =
                 timetable.getTrainingSessionsForDay(DayOfWeek.MONDAY);
         Assertions.assertNotNull(mondaySession);
         Assertions.assertEquals(1, mondaySession.size());
 
-        TreeMap<TimeOfDay, ArrayList<TrainingSession>> thursdaySession =
+        List<TrainingSession> thursdaySession =
                 timetable.getTrainingSessionsForDay(DayOfWeek.THURSDAY);
         Assertions.assertNotNull(thursdaySession);
         Assertions.assertEquals(2, thursdaySession.size());
 
-        List<TimeOfDay> thursdayTimes = new ArrayList<>(thursdaySession.keySet());
+        List<TimeOfDay> thursdayTimes = new ArrayList<>();
+        for(TrainingSession trainingSession: thursdaySession){
+            thursdayTimes.add(trainingSession.getTimeOfDay());
+        }
+
         Assertions.assertEquals(new TimeOfDay(13, 0), thursdayTimes.get(0));
         Assertions.assertEquals(new TimeOfDay(20, 0), thursdayTimes.get(1));
 
-        TreeMap<TimeOfDay, ArrayList<TrainingSession>> tuesdaySessions =
+        List<TrainingSession> tuesdaySessions =
                 timetable.getTrainingSessionsForDay(DayOfWeek.TUESDAY);
         Assertions.assertNull(tuesdaySessions);
     }
@@ -126,7 +130,7 @@ public class TimetableTest {
             Assertions.assertNull(timetable.getTrainingSessionsForDay(day));
 
             for (int i = 0; i < 23; i++) {
-                Assertions.assertNull(timetable.getTrainingSessionsForDayAndTime(day, new TimeOfDay(i, 0)));
+                Assertions.assertEquals(new ArrayList<>(),timetable.getTrainingSessionsForDayAndTime(day, new TimeOfDay(i, 0)));
             }
         }
     }

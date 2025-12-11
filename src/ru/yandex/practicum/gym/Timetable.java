@@ -22,14 +22,22 @@ public class Timetable {
         sessionsForTime.add(trainingSession);
     }
 
-    public TreeMap<TimeOfDay, ArrayList<TrainingSession>> getTrainingSessionsForDay(DayOfWeek dayOfWeek) {
-        return timetable.get(dayOfWeek);
+    public List<TrainingSession> getTrainingSessionsForDay(DayOfWeek dayOfWeek) {
+        TreeMap<TimeOfDay, ArrayList<TrainingSession>> sessionsForDay = timetable.get(dayOfWeek);
+        if (sessionsForDay == null) {
+            return new ArrayList<>();
+        }
+        ArrayList<TrainingSession> result = new ArrayList<>();
+        for(ArrayList<TrainingSession> trainingSessions: sessionsForDay.values()){
+            result.addAll(trainingSessions);
+        }
+        return result;
     }
 
     public List<TrainingSession> getTrainingSessionsForDayAndTime(DayOfWeek dayOfWeek, TimeOfDay timeOfDay) {
         TreeMap<TimeOfDay, ArrayList<TrainingSession>> sessionsForDay = timetable.get(dayOfWeek);
         if (sessionsForDay == null) {
-            return null;
+            return new ArrayList<>();
         }
         return sessionsForDay.get(timeOfDay);
     }
