@@ -73,7 +73,7 @@ public class TimetableTest {
 
         List<TrainingSession> tuesdaySessions =
                 timetable.getTrainingSessionsForDay(DayOfWeek.TUESDAY);
-        Assertions.assertNull(tuesdaySessions);
+        Assertions.assertTrue(tuesdaySessions.isEmpty());
     }
 
     @Test
@@ -127,7 +127,7 @@ public class TimetableTest {
         Timetable timetable = new Timetable();
 
         for(DayOfWeek day: DayOfWeek.values()){
-            Assertions.assertNull(timetable.getTrainingSessionsForDay(day));
+            Assertions.assertTrue(timetable.getTrainingSessionsForDay(day).isEmpty());
 
             for(int i = 0; i < 23; i++){
                 Assertions.assertEquals(new ArrayList<>(), timetable.getTrainingSessionsForDayAndTime(day, new TimeOfDay(i, 0)));
@@ -179,15 +179,15 @@ public class TimetableTest {
         timetable.addNewTrainingSession(fridaySession);
 
 
-        Assertions.assertNotNull(timetable.getTrainingSessionsForDay(DayOfWeek.MONDAY));
-        Assertions.assertNotNull(timetable.getTrainingSessionsForDay(DayOfWeek.WEDNESDAY));
-        Assertions.assertNotNull(timetable.getTrainingSessionsForDay(DayOfWeek.FRIDAY));
+        Assertions.assertFalse(timetable.getTrainingSessionsForDay(DayOfWeek.MONDAY).isEmpty());
+        Assertions.assertFalse(timetable.getTrainingSessionsForDay(DayOfWeek.WEDNESDAY).isEmpty());
+        Assertions.assertFalse(timetable.getTrainingSessionsForDay(DayOfWeek.FRIDAY).isEmpty());
 
 
-        Assertions.assertNull(timetable.getTrainingSessionsForDay(DayOfWeek.TUESDAY));
-        Assertions.assertNull(timetable.getTrainingSessionsForDay(DayOfWeek.THURSDAY));
-        Assertions.assertNull(timetable.getTrainingSessionsForDay(DayOfWeek.SATURDAY));
-        Assertions.assertNull(timetable.getTrainingSessionsForDay(DayOfWeek.SUNDAY));
+        Assertions.assertTrue(timetable.getTrainingSessionsForDay(DayOfWeek.TUESDAY).isEmpty());
+        Assertions.assertTrue(timetable.getTrainingSessionsForDay(DayOfWeek.THURSDAY).isEmpty());
+        Assertions.assertTrue(timetable.getTrainingSessionsForDay(DayOfWeek.SATURDAY).isEmpty());
+        Assertions.assertTrue(timetable.getTrainingSessionsForDay(DayOfWeek.SUNDAY).isEmpty());
 
 
         List<TrainingSession> mondayAt9 = timetable.getTrainingSessionsForDayAndTime(
